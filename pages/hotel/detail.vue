@@ -95,9 +95,39 @@
                   ></el-rate>
                 </div>
               </el-col>
-              <el-col :span="6">环境</el-col>
-              <el-col :span="6">产品</el-col>
-              <el-col :span="6">服务</el-col>
+              <el-col :span="6" class="circle">
+                <span class="circle-item">环境</span>
+                <el-progress
+                  type="circle"
+                  :width="80"
+                  :text-inside="true"
+                  :stroke-width="3"
+                  :percentage="25"
+                   color="#f90"
+                ></el-progress>
+              </el-col>
+              <el-col :span="6" class="circle">
+                <span class="circle-item">产品</span>
+                <el-progress
+                  type="circle"
+                  :width="80"
+                  :text-inside="true"
+                  :stroke-width="3"
+                  :percentage="25"
+                  color="#f90"
+                ></el-progress>
+              </el-col>
+              <el-col :span="6" class="circle">
+                <span class="circle-item">服务</span>
+                <el-progress
+                  type="circle"
+                  :width="80"
+                  :text-inside="true"
+                  :stroke-width="3"
+                  :percentage="25"
+                   color="#f90"
+                ></el-progress>
+              </el-col>
             </el-row>
           </el-col>
         </el-row>
@@ -196,7 +226,7 @@ export default {
       .server {
         color: #f90;
         .recommend {
-            position: relative;
+          position: relative;
           .star {
             width: 70px;
             height: 70px;
@@ -208,11 +238,19 @@ export default {
             font-size: 24px;
             transform: rotate(-30deg);
           }
-          .good{
-              position: absolute;
-              top: 26px;
-              left:-22px;
+          .good {
+            position: absolute;
+            top: 26px;
+            left: -22px;
           }
+        }
+        .circle{
+            position: relative;
+            .circle-item{
+                position: absolute;
+                top: 18px;
+                left: 25px;
+            }
         }
       }
     }

@@ -64,18 +64,31 @@ export default {
     window.onLoad = function() {
       var map = new AMap.Map("map", {
         zoom: 13, //放大级别
-        center: [116.39, 39.9], //中心点坐标，经纬度
+        center: [113.395493, 23.124029], //中心点坐标，经纬度
         viewMode: "3D" //使用3D视图
       });
       // 创建一个 Marker 实例：
-      var marker = new AMap.Marker({
-        position: new AMap.LngLat(116.39, 39.9), // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
-        title: "北京",
+      var marker1 = new AMap.Marker({
+        position: new AMap.LngLat(113.395493, 23.124029), 
+        title: "车陂",
         icon:
           "//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-1.png"
       });
+      var marker2 = new AMap.Marker({
+        position: new AMap.LngLat(113.40477, 23.122978), 
+        title: "东圃",
+        icon:
+          "//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-2.png"
+      });
+      var marker3 = new AMap.Marker({
+        position: new AMap.LngLat(113.380577, 23.12661), 
+        title: "棠下",
+        icon:
+          "//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-3.png"
+      });
+      var markerList = [marker1, marker2, marker3];
       // 将创建的点标记添加到已有的地图实例：
-      map.add(marker);
+      map.add(markerList);
     };
     var url =
       "https://webapi.amap.com/maps?v=1.4.15&key=f36d75e91d581307315c4b0b4fb7cdb3&callback=onLoad";
