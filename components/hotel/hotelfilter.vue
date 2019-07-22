@@ -17,72 +17,57 @@
       <el-col :span='4'>
             <el-row><span>住宿等级</span></el-row>
         <el-row>
-          <el-dropdown :hide-on-click="false" ref="dropdown">
-            <span class="el-dropdown-link" >
-              不限<i class="el-icon-arrow-down el-icon--right" ></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>1星</el-dropdown-item>
-              <el-dropdown-item>2星</el-dropdown-item>
-              <el-dropdown-item>3星</el-dropdown-item>
-              <el-dropdown-item>4星</el-dropdown-item>
-              <el-dropdown-item>5星</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
+             <el-select size="mini" v-model="levelname"  placeholder="不限" @change="handlelevels">
+                    <el-option
+                     v-for="(item, index) in levels"
+                    :key="index"
+                    :label="item.name"
+                    :value="item.name"
+                    >
+                    </el-option>
+                </el-select>
         </el-row>
       </el-col>
       <el-col :span='4'>
         <el-row><span>住宿类型</span></el-row>
         <el-row>
-          <el-dropdown>
-            <span class="el-dropdown-link">
-              不限<i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item> 经济型</el-dropdown-item>
-              <el-dropdown-item>舒适型</el-dropdown-item>
-              <el-dropdown-item>高档型</el-dropdown-item>
-              <el-dropdown-item>豪华型</el-dropdown-item>
-              <el-dropdown-item>度假村</el-dropdown-item>
-              <el-dropdown-item>公寓式酒店</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
+          <el-select size="mini" v-model="typename"  placeholder="不限" @change="handlelevels">
+                    <el-option
+                     v-for="(item, index) in types"
+                    :key="index"
+                    :label="item.name"
+                    :value="item.name"
+                    >
+                    </el-option>
+                </el-select>
         </el-row>
       </el-col>
       <el-col :span='4'>
           <el-row><span>酒店设施</span></el-row>
         <el-row>
-          <el-dropdown class="dropdown">
-            <span class="el-dropdown-link">
-              不限<i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item> wifi</el-dropdown-item>
-              <el-dropdown-item>热水壶</el-dropdown-item>
-              <el-dropdown-item>吹风机</el-dropdown-item>
-              <el-dropdown-item>外币兑换服务</el-dropdown-item>
-              <el-dropdown-item>洗衣服务</el-dropdown-item>
-              <el-dropdown-item>电梯</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
+          <el-select size="mini" v-model="assetname"  placeholder="不限" @change="handlelevels">
+                    <el-option
+                     v-for="(item, index) in assets"
+                    :key="index"
+                    :label="item.name"
+                    :value="item.name"
+                    >
+                    </el-option>
+                </el-select>
         </el-row>
       </el-col>
       <el-col :span='4'>
-          <el-row><span>酒店设施</span></el-row>
+          <el-row><span>酒店品牌</span></el-row>
         <el-row>
-          <el-dropdown>
-            <span class="el-dropdown-link">
-              不限<i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item> wifi</el-dropdown-item>
-              <el-dropdown-item>热水壶</el-dropdown-item>
-              <el-dropdown-item>吹风机</el-dropdown-item>
-              <el-dropdown-item>外币兑换服务</el-dropdown-item>
-              <el-dropdown-item>洗衣服务</el-dropdown-item>
-              <el-dropdown-item>电梯</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
+         <el-select size="mini" v-model="brandname"  placeholder="不限" @change="handlelevels">
+                    <el-option
+                     v-for="(item, index) in brands"
+                    :key="index"
+                    :label="item.name"
+                    :value="item.name"
+                    >
+                    </el-option>
+                </el-select>
         </el-row>
       </el-col>
     </el-row>
@@ -92,8 +77,36 @@
 export default {
   data() {
     return {
-      value: 100
+      assets:[],
+      brands:[],
+      levels:[],
+      types:[],
+      value: 2970,
+      levelname:'不限',
+      typename:'不限',
+      brandname:'不限',
+      assetname:'不限',
+      hotellevel:0,
+      hoteltype:0,
+      hotelbrand:0,
+      hotelasset:0
     }
+  },
+  methods: {
+    handlelevels(){}
+  },
+  mounted () {
+      this.$axios({
+        url:'hotels/options'
+      })
+      .then(res=>{
+        console.log(res)
+        const {data}=res.data
+        this.assets=data.assets
+        this.brands=data.brands
+        this.levels=data.levels
+        this.types=data.types
+      })
   }
 }
 </script>
