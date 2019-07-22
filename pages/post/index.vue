@@ -1,69 +1,55 @@
 <template>
-  <div style="padding:50px;">
-     <h1 style="margin-bottom:50px;">组件递归</h1>
+  <!-- 旅游攻略主页 -->
+  <section class="postContainer">
+      <el-row type="flex" justify="space-between">
+          <!-- 侧边栏 -->
+          <div class="aside">
+              <NavsItem /> 
+          </div>
+          <!-- 主要内容 -->
+          <div class="main">
+              <!-- 过滤搜索栏 -->
+              <FilterSearch />
 
-    <NavsItem :data="navs"/>
-
-  </div>
+              <!-- 攻略内容 -->
+              <PostMain />
+          </div>
+      </el-row>
+  </el-row>
+  </section>
+  
 </template>
 
 <script>
-
 import NavsItem from "@/components/post/navsItem";
-
+import FilterSearch from "@/components/post/filterSearch";
+import PostMain from "@/components/post/postMain";
 export default {
     components: {
         NavsItem,
-    },
-    data(){
-        return {
-            navs: [
-                {
-                    title: "衣服",
-                    children: [
-                        { 
-                            title: "男装",
-                            children: [
-                                { 
-                                    title: "T恤",
-                                    children: [ 
-                                        {title: "短袖"}, 
-                                        { title: "长袖" }
-                                     ]
-                                }
-                            ]
-                        },
-                        { 
-                            title: "女装",
-                            children: [
-                                {
-                                    title: "裙子",
-                                    children: [
-                                        { title: "连衣裙" },
-                                        { title: "短裙" }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    title: "电器",
-                    children: [
-                        { title: "电视", children: [
-                            { title: "液晶电视" },
-                            { title: "普通电视"}
-                        ] },
-                        { title: "冰箱" },
-                        { title: "空调" },
-                    ]
-                }
-            ]
-        }
+        PostMain,
+        FilterSearch
     }
 }
 </script>
 
-<style>
+<style lang="less" scoped>
+.postContainer{
+    min-width: 1000px;
+    margin: 0 auto;
+    margin-top: 20px;
+    max-width: 1000px;
+    
 
+    .aside{
+        width: 200px;
+        height: 1000px;
+    }
+
+    .main{
+        width: 700px;
+    }
+}
 </style>
+
+
