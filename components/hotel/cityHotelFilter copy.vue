@@ -33,8 +33,6 @@
           start-placeholder="入住日期"
           end-placeholder="离店日期"
            :picker-options="pickerOptions"
-            @change="handleDate"
-          
         >
         </el-date-picker>
       </el-form-item>
@@ -227,7 +225,6 @@
   </div>
 </template>
 <script>
-import moment from 'moment'
 export default {
   data() {
     return {
@@ -236,7 +233,6 @@ export default {
             return time.getTime() < Date.now();
           }
       },
-      locations:[],
       longitude:118.8718107,
       latitude:31.32846821,
       id:74,
@@ -286,13 +282,6 @@ export default {
   }
   },
   methods: {
-      handleDate(value){
-          //  console.log(value)
-            const start=moment(value[0]).format("YYYY-MM-DD")
-            const end=moment(value[1]).format("YYYY-MM-DD")
-           this.form.date =start+','+end
-          //  console.log( this.form.date)
-        },
     submit(){
       console.log(this.peoplenum)
 
@@ -361,7 +350,7 @@ export default {
                 }
             })
     },
-    getMap(locations,longitude, latitude){
+    getMap(longitude,latitude){
       // 页面加加载之后执行
      window.onLoad = function () {
       // 生成地图.container是显示地图的div的id
@@ -370,16 +359,15 @@ export default {
         center: [longitude, latitude],//中心点坐标，经纬度
         viewMode: '3D'//使用3D视图
       });
-    for(var i=0;i<locations.length;i++){
-        // 创建一个 Marker 实例：
+
+      // 创建一个 Marker 实例：
       var marker = new AMap.Marker({
         //content: "<div style='width:20px; height:20px; background:red;'>1</div>",
-        position: new AMap.LngLat(locations[i].location.longitude, locations[i].location.latitude),   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
-        title: locations[i].city.name
+        position: new AMap.LngLat(longitude, latitude),   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
+        title: '北京'
       });
 
       map.add(marker);
-    }
        }
 
       // 地图的链接
@@ -403,7 +391,7 @@ export default {
         this.longitude=data[0].location.longitude
         this.latitude=data[0].location.latitude
         // console.log(1)
-        this.getMap(data,this.longitude, this.latitude)
+        this.getMap(this.longitude,this.latitude)
       })
       }
       
@@ -423,7 +411,7 @@ export default {
       var marker = new AMap.Marker({
         //content: "<div style='width:20px; height:20px; background:red;'>1</div>",
         position: new AMap.LngLat(118.8718107, 31.32846821),   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
-        title: '南京'
+        title: '北京'
       });
 
       map.add(marker);
