@@ -7,7 +7,7 @@
         <span class="el-icon-arrow-right"></span>
         <el-row type="flex" class="menu" v-show="currentTab === index">
             <div class="hid"></div>
-          <el-row type="flex" align="middle" class="menuList" v-for="(item,index) in item.children" :key="index">
+          <el-row type="flex" align="middle" class="menuList" v-for="(item,index) in item.children" :key="index" @click.native="handleSearch(item.city)">
             <span>{{index+1}}</span>
             <span>{{item.city}}</span>
             <span>{{item.desc}}</span>
@@ -38,6 +38,12 @@ export default {
     },
     handleHidden() {
       this.currentTab = -1
+    },
+    handleSearch(city){
+      const params={
+        city
+      }
+      this.$emit('getData',params)      
     }
   },
   mounted() {
@@ -46,7 +52,7 @@ export default {
       method: 'GET',
     })
       .then(res => {
-        console.log(res);
+        // console.log(res);
         this.navList = res.data.data
       })
   }

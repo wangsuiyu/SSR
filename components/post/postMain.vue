@@ -1,65 +1,68 @@
 <template>
-  <div class="postContainer">
-    <div class="postGuide">
-      <h4>塞班贵？一定是你的打开方式不对！6000块玩转塞班</h4>
-      <p>
-        大家对塞班岛总存在着这样的误解，知道它是美属地盘，就理所当然地觉得这里的花费一定很高，花费高有高的玩法，那如果只有6000块的预算呢？要怎么玩？关于旅行这件事，我们要让钱花得更有道理，收下这份攻略，带你6000块花式玩转塞班。图：塞班岛。 by第5季旅游一、怎样用6000块玩转塞班？大多数出境游客人不做预算或
-      </p>
+  <div class="postContent">
+    <div class="postGuide"  v-if="data.images.length >=2"
+      >
+      <nuxt-link :to="`/post/detail?id=${data.id}`" ><h4>{{data.title}}</h4></nuxt-link>
+      <nuxt-link :to="`/post/detail?id=${data.id}`" ><p>{{data.summary}}</p></nuxt-link>
+      
       <div class="photo">
-        <a href="">
-          <img src="https://n3-q.mafengwo.net/s10/M00/E8/E4/wKgBZ1octoCABhgLAAafahORRLs91.jpeg?imageView2%2F2%2Fw%2F1360%2Fq%2F90" alt="">
+        <a :href="`/post/detail?id=${data.id}`">
+          <img :src="data.images[0]" alt="">
         </a>
-        <a href="">
-          <img src="https://images.mafengwo.net/images/i/face/brands_v3/6@2x.png" alt="">
+        <a :href="`/post/detail?id=${data.id}`">
+          <img :src="data.images[1]" alt="">
         </a>
-        <a href="">
-          <img src="https://p1-q.mafengwo.net/s10/M00/E9/33/wKgBZ1octwiAAKAoAAJ9ixcJc9M71.jpeg?imageView2%2F2%2Fw%2F1360%2Fq%2F90" alt="">
+        <a :href="`/post/detail?id=${data.id}`">
+          <img :src="data.images[2]" alt="">
         </a>
       </div>
       <div class="bottom">
         <div class="info">
           <div class="one">
             <i class="el-icon-location-outline"></i>
-            <span>北京市</span>
+            <span>{{data.cityName}}</span>
           </div>
-            <div class="two">
-                <span>by 地球发动机</span>
-            </div>
-            <div class="three">
-                <i class="el-icon-view"></i>
-                <span>2564</span>
-            </div>
+          <div class="two">
+            by <img src="http://127.0.0.1:1337/assets/images/avatar.jpg" alt="">
+            <span>{{data.account.nickname}}</span>
+          </div>
+          <div class="three">
+            <i class="el-icon-view"></i>
+            <span>{{data.watch}}</span>
+          </div>
         </div>
         <div class="goods">
-            31赞
+          <span>{{data.like || 0}}</span>&nbsp;赞
         </div>
       </div>
     </div>
-    <div class="postGuide1">
-      <a href="">
-        <img src="https://p3-q.mafengwo.net/s13/M00/41/C4/wKgEaVyaOs2AA9IKAAj8Lg2YzaU64.jpeg?imageMogr2%2Fthumbnail%2F1360x%2Fstrip%2Fquality%2F90" alt="">
+    <div class="postGuide1"
+    v-if="data.images.length < 2">
+      <a :href="`/post/detail?id=${data.id}`">
+        <img :src="data.images[0]" alt="">
       </a>
-      <div class="postContainer">
-          <h4>远东行：用好奇心打量这座城 —— 最值得收藏的海参崴出行攻略</h4>
-          <p>想象一下一个距离 北京 只有2.5小时飞行距离的城市：身处 亚洲 却能感受到十足的欧陆风情——欧式建筑和街道，金发碧眼的路人，正宗的西餐外加只有国内一半售价的帝王蟹可以敞开吃——更难能可贵的是，这里对国人</p>
-                <div class="bottom">
-        <div class="info">
-          <div class="one">
-            <i class="el-icon-location-outline"></i>
-            <span>北京市</span>
+      <div class="postsContainer">
+        <a :href="`/post/detail?id=${data.id}`"><h4>{{data.title}}</h4></a>
+        <a :href="`/post/detail?id=${data.id}`"><p>{{data.summary}}</p></a>
+        <div class="bottom">
+          <div class="info">
+            <div class="one">
+              <i class="el-icon-location-outline"></i>
+              <span>{{data.cityName}}</span>
+            </div>
+             <div class="two">
+            by <img src="http://127.0.0.1:1337/assets/images/avatar.jpg" alt="">
+            <span>{{data.account.nickname}}</span>
           </div>
-            <div class="two">
-                <span>by 地球发动机</span>
-            </div>
             <div class="three">
-                <i class="el-icon-view"></i>
-                <span>2564</span>
+              <i class="el-icon-view"></i>
+              <span>{{data.watch}}</span>
             </div>
+          </div>
+          <div class="goods">
+            <span>{{data.like || 0}}</span>&nbsp;赞
+          </div>
         </div>
-        <div class="goods">
-            31赞
-        </div>
-      </div>
       </div>
     </div>
   </div>
@@ -67,10 +70,120 @@
 
 <script>
 export default {
+  props: {
+        data: {
+            type: Object,   // 声明属性的类型
+            default: {}     // 属性的默认值
+        }
+    },
+  data() {
+    return {
+    
+    }
+  },
+
+  mounted() {
+    // this.$axios({
+    //   url: '/posts',
+    // })
+    //   .then(res => {
+    //     // console.log(res);
+    //     this.postsList = res.data.data
+    //     console.log(this.postsList);
+
+    //   })
+    console.log(this.data);
+    
+  }
 
 }
 </script>
 
 <style lang="less" scoped>
+.postContent {
+  width: 700px;
+
+  h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: 400;
+    &:hover{
+      cursor: pointer;
+      color:orange;
+    }
+  }
+  p {
+    max-width: 700px;
+    font-size: 14px;
+    color: grey;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    &:hover{
+      cursor: pointer;
+    }
+  }
+
+  .postGuide {
+    border-bottom: 1px solid #ccc;
+    margin: 20px 0 10px 0;
+    .photo {
+      margin-top: 14px;
+      width: 700px;
+      display: flex;
+      justify-content: space-between;
+
+      img {
+        max-width: 220px;
+        height: 150px;
+      }
+    }
+  }
+  .postGuide1 {
+    display: flex;
+    justify-content: space-between;
+    margin: 22px 0 16px 0;
+    border-bottom: 1px solid #ccc;
+    img {
+      max-width: 220px;
+      height: 150px;
+      margin-right: 18px;
+    }
+  }
+  .bottom {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+
+    .info {
+      display: flex;
+      font-size: 12px;
+      color: grey;
+
+      .two {
+        margin: 0 8px;
+        &:hover{
+          cursor: pointer;
+        }
+
+        img{
+          width: 18px;
+          height: 18px;
+          vertical-align: middle;
+          margin-right: 0;
+        }
+
+        span {
+          color: orange;
+          padding: 0 4px;
+        }
+      }
+    }
+    .goods {
+      color: orange;
+    }
+  }
+}
 </style>
 
