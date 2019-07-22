@@ -5,20 +5,20 @@
       class="hoteldetail"
     >
       <el-col :span='8'>
-        <a href="">
+        <nuxt-link :to="`/hotel/detail?id=${data.id}`">
         <img
           style="width:320px;height:210px;"
           :src='data.photos'
           alt=""
         >
-        </a>
+</nuxt-link>
       </el-col>
       <el-col
         :span='10'
         class="detail"
       >
         <el-row>
-          <h2>{{data.name}}</h2>
+          <h2><nuxt-link :to="`/hotel/detail?id=${data.id}`">{{data.name}}</nuxt-link></h2>
           <span>{{data.alias}}</span>
           <template v-if="data.hotellevel">
             <i
@@ -29,7 +29,7 @@
             >&#xe60e;</i>
           </template>
 
-          <span>{{data.hoteltype.name||'无等级'}}</span>
+          <span>{{data.hoteltype.name||''}}</span>
         </el-row>
         <el-row>
           <el-col :span='10'>
