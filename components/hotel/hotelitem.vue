@@ -19,7 +19,7 @@
       >
         <el-row>
           <h2><nuxt-link :to="`/hotel/detail?id=${data.id}`">{{data.name}}</nuxt-link></h2>
-          <span>{{data.alias}}</span>
+          <span style="color:#999">{{data.alias}}</span>
           <template v-if="data.hotellevel">
             <i
               v-for="(v,i) in data.hotellevel.level"
@@ -29,7 +29,7 @@
             >&#xe60e;</i>
           </template>
 
-          <span>{{data.hoteltype.name||''}}</span>
+          <span style="color:#999">{{data.hoteltype.name||''}}</span>
         </el-row>
         <el-row>
           <el-col :span='10'>
@@ -51,7 +51,7 @@
         </el-row>
         <el-row>
           <i class="el-icon-location"></i>
-          <span>位于：{{data.address}}</span>
+          <span style="color:#666; fontSize:14px">位于：{{data.address}}</span>
         </el-row>
       </el-col>
       <el-col :span='6'>
@@ -94,7 +94,9 @@ export default {
 .container {
   width: 1000px;
   margin: 0 auto;
+  padding: 10px;
   .hoteldetail {
+    padding-bottom: 5px;
     border-bottom: 1px solid #ddd;
     > div {
       &:last-child {
@@ -110,8 +112,13 @@ export default {
   .hotelweb {
     border-bottom: 1px solid #ddd;
     height: 50px;
-    a span:last-child {
+    a{
+       color: #606266;
+      font-size: 14px;
+        span:last-child {
       float: right;
+      color: #f90;
+    }
     }
   }
 }
