@@ -3,8 +3,8 @@
     <!-- 面包屑 -->
     <div class="detail-crumbs">
       <el-breadcrumb separator-class="el-icon-arrow-right">
-        <el-breadcrumb-item :to="{ path: '#' }">{{hotelInfo.big_cate}}</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path: '#' }">{{hotelInfo.real_city}}{{hotelInfo.big_cate}}</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/hotel' }">{{hotelInfo.big_cate}}</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/hotel' }">{{hotelInfo.real_city}}{{hotelInfo.big_cate}}</el-breadcrumb-item>
         <el-breadcrumb-item>{{hotelInfo.name}}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
