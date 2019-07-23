@@ -1,7 +1,11 @@
 export const state = () => ({
-    list: [1,2,3]
+    articleList:[]
 })
 
 export const mutations = {
     setData(state,data){}
+}
+
+export const actions = {
+    
 }
