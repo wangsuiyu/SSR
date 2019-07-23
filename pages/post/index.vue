@@ -51,10 +51,13 @@ export default {
     }
   },
   methods: {
-    getData(params) {        
+    getData(obj) { 
+         
             this.$axios({
             url:'/posts',
-            params
+            params:{
+              ...obj
+            }
         })
         .then(res=>{
             // console.log(res);
@@ -88,7 +91,11 @@ export default {
     },
   },
   mounted() {
-      this.getData()
+    if(this.$route.query.city){
+      this.getData(this.$route.query)
+      }else{
+        this.getData({})
+      }
   },
   components: {
     NavsItem,

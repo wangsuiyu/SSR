@@ -283,7 +283,7 @@ export default {
   },
   methods: {
     submit(){
-      console.log(this.peoplenum)
+      // console.log(this.peoplenum)
 
     },
     onShow(){
@@ -325,7 +325,7 @@ export default {
                     }
                 }).then(res => {
                     const {data} = res.data;
-                     console.log(res)
+                    //  console.log(res)
                     
                     // 添加一个value属性，值等于name没有市字
                     const newData = data.map(v => {

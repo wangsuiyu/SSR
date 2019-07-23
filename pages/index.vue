@@ -39,8 +39,8 @@
             align="middle" 
             class="search-input">
                 <input 
-                :placeholder="tabs[currentTab].placeholder" />
-                <i class="el-icon-search"></i>
+                :placeholder="tabs[currentTab].placeholder" v-model="value"/>
+                <i class="el-icon-search" @click="search(value)"></i>
             </el-row>
         </div>
     </div>
@@ -52,6 +52,7 @@
 export default {
   data(){
     return {
+      value:'',
       banners: [],
       currentTab: 0,
       // tab栏的数据
@@ -74,6 +75,12 @@ export default {
 
       // 修改当前高亮
       this.currentTab = index;
+    },
+    search(value){
+      // console.log(value);
+      // this.$store.commit('user/setGetCitys',value)
+      // console.log(this.$store.state.user.getCitys);
+      this.$router.push('/post?city='+value)
     }
   },
 

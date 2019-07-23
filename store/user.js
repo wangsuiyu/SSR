@@ -9,7 +9,8 @@ export const state = () => {
     
             // 插件会自动读取本地的数据到store
             // user: JSON.parse( window.localStorage.getItem("userInfo") || `{}`)
-        } 
+        },
+        getCitys :'' 
     }
 }
 
@@ -29,6 +30,9 @@ export const mutations = {
             token: "",
             user: {}
         }
+    },
+    setGetCitys(state,data){
+        state.getCitys = data
     }
 }
 

@@ -40,10 +40,17 @@ export default {
       this.currentTab = -1
     },
     handleSearch(city){
-      const params={
-        city
-      }
-      this.$emit('getData',params)      
+      var obj = {...this.$route.query}
+      // console.log(this.$route);
+      
+      obj.city = city;
+      this.$router.replace({
+        query:obj,
+        // name:this.$route.name
+      })
+      // console.log(obj);
+      
+      this.$emit('getData',obj)      
     }
   },
   mounted() {

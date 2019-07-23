@@ -47,14 +47,14 @@ export default {
         this.currentPage=val
       },
     getCity(city) {
-      console.log(city)
+      // console.log(city)
       this.$axios({
         url: 'hotels',
         params: {
           city: city
         }
       }).then(res => {
-        console.log(res)
+        // console.log(res)
         const { data } = res.data
         this.hoteldata = data
       })

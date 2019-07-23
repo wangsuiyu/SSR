@@ -100,7 +100,7 @@ export default {
         url:'hotels/options'
       })
       .then(res=>{
-        console.log(res)
+        // console.log(res)
         const {data}=res.data
         this.assets=data.assets
         this.brands=data.brands
