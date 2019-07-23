@@ -1,8 +1,5 @@
 <template>
   <div class="container">
-    <el-row class="bg" v-if='isprocess'>
-    <el-progress  type="circle" :percentage="100" status="success" class="progress"></el-progress>
-    </el-row>
     <el-breadcrumb
       separator-class="el-icon-arrow-right"
       class='top'
