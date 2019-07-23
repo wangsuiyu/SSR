@@ -4,11 +4,17 @@
       <h4 class="aside-title">相关攻略</h4>
 
       <div class="recommend-list">
-        <nuxt-link to="/" class="recommend-item" v-for="(item,index) in dataList" :key="index">
+        <nuxt-link
+          :to="`/post/detail?id=${item.id}`"
+          class="recommend-item"
+          v-for="(item,index) in dataList"
+          :key="index"
+          @click="changeRouter(item.id)"
+        >
           <el-row type="flex" class="post-imgText">
             <div class="post-img">
-              <img src="item.images[0]" alt />
-            </div>
+              <img :src="item.images[0]" alt />
+            </div>x
             <div class="post-text">
               <div class="text-title">{{item.title}}</div>
               <p>{{item.updated_at|formatDate}} 阅读 {{item.watch}}</p>
@@ -28,7 +34,6 @@ export default {
       dataList: []
     };
   },
-
   mounted() {
     // 请求推荐文章数据
     this.$axios({
@@ -36,6 +41,7 @@ export default {
       method: "GET"
     }).then(res => {
       this.dataList = res.data.data;
+      console.log(this.dataList);
     });
     // this.history =  JSON.parse( localStorage.getItem("airs") || `[]` );
   },
@@ -44,7 +50,8 @@ export default {
     formatDate: function(value) {
       return moment(value).format("YYYY-MM-DD hh:mm ");
     }
-  }
+  },
+
 };
 </script>
 

@@ -20,6 +20,9 @@ export default {
     TravelAside,
     Traveldetails
   },
+  mounted () {
+    
+  },
   data() {
     return {
       pageIndex: 1, // 当前页数

@@ -34,7 +34,6 @@
           end-placeholder="离店日期"
            :picker-options="pickerOptions"
             @change="handleDate"
-          
         >
         </el-date-picker>
       </el-form-item>
@@ -65,7 +64,6 @@
                     :key="item.value"
                     :label="item.label"
                     :value="item.value"
-                    v-model="peoplenum"
                   >
                   </el-option>
                 </el-select>
@@ -98,7 +96,6 @@
                   class="confirm"
                   type="primary"
                   size='mini'
-                  @click="submit"
                 >确定</el-button>
               </el-col>
             </el-row>
@@ -110,7 +107,7 @@
         </el-popover>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" >查看价格</el-button>
+        <el-button type="primary" @click="getDateCity">查看价格</el-button>
       </el-form-item>
     </el-form>
     <div>
@@ -140,7 +137,7 @@
                   <span>{{item.name}}&nbsp;&nbsp;</span></a>
                   </div>
                   <div class="hideBtn">
-                    <a href="#"  @click.stop.prevent='onHide'>等个区域
+                    <a href="#"  @click.stop.prevent='onHide' >{{data.scenics.length}}等个区域
                       <i class="iconfont">&#xe65d;</i>
                     </a>
                   </div>
@@ -235,13 +232,17 @@ export default {
          disabledDate(time) {
             return time.getTime() < Date.now();
           }
-      },
+      }, 
+      mapdata:[{location:{longitude:118.8718107,latitude:31.32846821},city:{name:'南京'}},
+      {location:{longitude:118.787727,latitude:32.057976},city:{name:'南京'}},
+      {location:{longitude:118.732506,latitude:32.126942},city:{name:'南京'}},
+      {location:{longitude:118.9213,latitude:31.75649},city:{name:'南京'}}],
+      isprocess:false,
+      date:'',
       locations:[],
-      longitude:118.8718107,
-      latitude:31.32846821,
+      longitude:118.732506,
+      latitude:32.126942,
       id:74,
-      peoplenum:0,
-      childnum:0,
       isHide:true,
       data:{},
       form: {
@@ -290,13 +291,29 @@ export default {
           //  console.log(value)
             const start=moment(value[0]).format("YYYY-MM-DD")
             const end=moment(value[1]).format("YYYY-MM-DD")
-           this.form.date =start+','+end
+           this.date =start+','+end
           //  console.log( this.form.date)
         },
-    submit(){
-      // console.log(this.peoplenum)
-
-    },
+        getDateCity(){
+          const start=this.date.split(",")[0]
+          const end=this.date.split(",")[1]
+          this.$axios({
+            url:'hotels',
+            params:{
+              city:this.id,
+              enterTime:start,
+              leftTime:end
+            }
+          })
+          .then(res=>{
+            // console.log(res,1111)
+            const {data}=res.data
+            if(data){
+              this.isprocess=true
+              this.$emit('changeDataList',data)
+            }
+          })
+        },
     onShow(){
       this.isHide=false
     },
@@ -373,7 +390,7 @@ export default {
     for(var i=0;i<locations.length;i++){
         // 创建一个 Marker 实例：
       var marker = new AMap.Marker({
-        //content: "<div style='width:20px; height:20px; background:red;'>1</div>",
+        // content: "<i class='iconfont' style=' fontSize:6px'>&#xeb33;</i>",
         position: new AMap.LngLat(locations[i].location.longitude, locations[i].location.latitude),   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
         title: locations[i].city.name
       });
@@ -400,8 +417,8 @@ export default {
         }
       }).then(res=>{
         const {data}=res.data
-        this.longitude=data[0].location.longitude
-        this.latitude=data[0].location.latitude
+        this.longitude=data[2].location.longitude
+        this.latitude=data[2].location.latitude
         // console.log(1)
         this.getMap(data,this.longitude, this.latitude)
       })
@@ -410,32 +427,7 @@ export default {
   
   },
   mounted() {
-    // 页面加加载之后执行
-    window.onLoad = function () {
-      // 生成地图.container是显示地图的div的id
-      var map = new AMap.Map('map', {
-        zoom: 9,//放大级别
-        center: [118.8718107, 31.32846821],//中心点坐标，经纬度
-        viewMode: '3D'//使用3D视图
-      });
-
-      // 创建一个 Marker 实例：
-      var marker = new AMap.Marker({
-        //content: "<div style='width:20px; height:20px; background:red;'>1</div>",
-        position: new AMap.LngLat(118.8718107, 31.32846821),   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
-        title: '南京'
-      });
-
-      map.add(marker);
-    }
-
-    // 地图的链接
-    var key = "fc349821166279b8365299d22d7cf202"
-    var url = `https://webapi.amap.com/maps?v=1.4.15&key=${key}&callback=onLoad`;
-    var jsapi = document.createElement('script');
-    jsapi.charset = 'utf-8';
-    jsapi.src = url;
-    document.head.appendChild(jsapi);
+   this.getMap(this.mapdata,this.longitude,this.latitude)
   }
 
 }
@@ -480,7 +472,7 @@ export default {
   }
 }
 .showbg{
-   height: 150px;
+  //  height: 150px;
 }
 .posts{
   font-size:14px;

@@ -11,6 +11,7 @@
             v-model="value"
             :min='0'
             :max='2970'
+            @change="changPrice"
           ></el-slider>
         </el-row>
       </el-col>
@@ -22,7 +23,7 @@
                      v-for="(item, index) in levels"
                     :key="index"
                     :label="item.name"
-                    :value="item.name"
+                    :value="item.level"
                     >
                     </el-option>
                 </el-select>
@@ -31,7 +32,7 @@
       <el-col :span='4'>
         <el-row><span>住宿类型</span></el-row>
         <el-row>
-          <el-select size="mini" v-model="typename"  placeholder="不限" @change="handlelevels">
+          <el-select size="mini" v-model="typename"  placeholder="不限" @change="handletypes">
                     <el-option
                      v-for="(item, index) in types"
                     :key="index"
@@ -45,7 +46,7 @@
       <el-col :span='4'>
           <el-row><span>酒店设施</span></el-row>
         <el-row>
-          <el-select size="mini" v-model="assetname"  placeholder="不限" @change="handlelevels">
+          <el-select size="mini" v-model="assetname"  placeholder="不限" @change="handleassets">
                     <el-option
                      v-for="(item, index) in assets"
                     :key="index"
@@ -59,12 +60,12 @@
       <el-col :span='4'>
           <el-row><span>酒店品牌</span></el-row>
         <el-row>
-         <el-select size="mini" v-model="brandname"  placeholder="不限" @change="handlelevels">
+         <el-select size="mini" v-model="brandname"  placeholder="不限" @change="handlebrands">
                     <el-option
                      v-for="(item, index) in brands"
                     :key="index"
                     :label="item.name"
-                    :value="item.name"
+                    :value="item.id"
                     >
                     </el-option>
                 </el-select>
@@ -92,8 +93,50 @@ export default {
       hotelasset:0
     }
   },
+  props: {
+    data:{
+      type:Array,
+      default:[]
+    }
+  },
   methods: {
-    handlelevels(){}
+    changPrice(val){
+      // console.log(val)
+      const arr=this.data.filter(v=>{
+        if(v.price){
+          return v.price<val
+        }
+      })
+      this.$emit('changeDataList',arr)
+    },
+    handlelevels(value){
+      const arr=this.data.filter(v=>{
+        if(v.hotellevel){
+          return v.hotellevel.level==value
+        }
+      })
+      this.$emit('changeDataList',arr)
+    },
+    handletypes(value){
+      const arr=this.data.filter(v=>{
+        if(v.hoteltype){
+          return v.hoteltype.name==value
+        }
+      })
+      this.$emit('changeDataList',arr)
+    },
+    handleassets(value){
+      const arr=this.data
+       this.$emit('changeDataList',arr)
+    },
+    handlebrands(value){
+       const arr=this.data.filter(v=>{
+        if(v.hotelbrand){
+          return v.hotelbrand.id==value
+        }
+      })
+      this.$emit('changeDataList',arr)
+    }
   },
   mounted () {
       this.$axios({

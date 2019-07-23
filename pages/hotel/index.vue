@@ -1,11 +1,11 @@
 <template>
   <div class="container">
     <!-- 头部城市搜索过滤器 -->
-    <cityHotelFilter @getCity='getCity' />
+    <cityHotelFilter @getCity='getCity'  @changeDataList='changeDataList'/>
     <!-- 搜索区域，攻略，地图 -->
     <div></div>
     <!-- 酒店详情搜索过滤器 -->
-    <HotelFilter />
+    <HotelFilter :data='cachehoteldata' @changeDataList='changeDataList'/>
     <!-- 酒店分页 -->
     <HotelItem v-for="(item,index) in dataList" :key="index" :data='item'/>
     <div class="pagination">
@@ -30,8 +30,12 @@ export default {
           hoteltype: {},
           product: [],
           hotellevel: {}
-        }]
-      ,
+        }],
+         cachehoteldata: [ {
+          hoteltype: {},
+          product: [],
+          hotellevel: {}
+        }],
       currentPage:1,
       pageSize:4
     }
@@ -42,6 +46,11 @@ export default {
     HotelItem
   },
   methods: {
+    changeDataList(arr){
+      this.hoteldata=arr
+      this.total=this.hoteldata.length;
+      this.currentPage=1
+    },
       handleCurrentChange(val) {
         // console.log(`当前页: ${val}`);
         this.currentPage=val
@@ -57,6 +66,8 @@ export default {
         // console.log(res)
         const { data } = res.data
         this.hoteldata = data
+        this.cachehoteldata=[...data]
+        console.log(10,this.cachehoteldata)
       })
     }
   },
